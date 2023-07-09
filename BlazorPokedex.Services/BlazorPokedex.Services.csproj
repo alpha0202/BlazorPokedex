@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorPokedex.Models\BlazorPokedex.Models.csproj" />
+  </ItemGroup>
+
 </Project>
