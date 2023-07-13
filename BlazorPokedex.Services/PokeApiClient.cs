@@ -1,8 +1,11 @@
 ﻿using BlazorPokedex.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
+
 using System.Threading.Tasks;
 
 namespace BlazorPokedex.Services
@@ -22,9 +25,12 @@ namespace BlazorPokedex.Services
             throw new NotImplementedException();
         }
 
-        public Task<Pokemon> GetPokemon(string name)
+        public async Task<Pokemon> GetPokemon(string name)
         {
-            throw new NotImplementedException();
+          return  JsonConvert.DeserializeObject<Pokemon>(await _httpClient.GetStringAsync($"pokemon/{name}"));
+
+        
+
         }
     }
 }
