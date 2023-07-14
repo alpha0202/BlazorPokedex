@@ -20,9 +20,17 @@ namespace BlazorPokedex.Services
         }
 
 
-        public Task<IEnumerable<Pokemon>> GetAllPokemons()
+        public async Task<IEnumerable<Pokemon>> GetAllPokemons()
         {
-            throw new NotImplementedException();
+           var pokemonList = JsonConvert.DeserializeObject<ResultObject>(await _httpClient.GetStringAsync("pokemon?limit=24&offset=24"));
+
+            var resultList = new List<Pokemon>();
+
+            foreach (var pokemon in pokemonList.Pokemons) 
+            {
+                resultList.Add(await GetPokemon(pokemon.Name));
+            }
+            return resultList;
         }
 
         public async Task<Pokemon> GetPokemon(string name)
