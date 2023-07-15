@@ -1,0 +1,33 @@
+﻿@using BlazorPokedex.Models.Pagination;
+@using Models;
+
+
+
+<nav class="nav">
+     <ul class="pagination justify-content-center">
+        @foreach (var item in _paginationButtons)
+        {
+            <li style="cursor:pointer" class="page-item @(item.Enable ? null : "disabled") @(item.Active? "active":null)">
+                <span class="page-link" href="#">@item.Text</span>
+            </li>
+
+            
+        }
+
+     </ul>
+
+</nav>
+
+@code {
+    private List<PaginationButton> _paginationButtons;
+
+    [Parameter]
+    public PaginationMetaData paginationMetaData  { get; set; }
+    [Parameter]
+    public EventCallback<int> SelectedPage { get; set; }
+
+    [Parameter]
+    public int Spread { get; set; }
+
+
+}
