@@ -22,7 +22,7 @@
     private List<PaginationButton> _paginationButtons;
 
     [Parameter]
-    public PaginationMetaData paginationMetaData  { get; set; }
+    public PaginationMetaData MetaData  { get; set; }
     [Parameter]
     public EventCallback<int> SelectedPage { get; set; }
 
@@ -32,7 +32,9 @@
 
     private void CreatePaginationButtons()
     {
-        
+        _paginationButtons = new List<PaginationButton>();
+        _paginationButtons.Add(new PaginationButton(MetaData.CurrentPage - 1, MetaData.HasPrevious, "Previous"));
+
     }
 
 }
