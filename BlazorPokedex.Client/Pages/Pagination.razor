@@ -35,6 +35,21 @@
         _paginationButtons = new List<PaginationButton>();
         _paginationButtons.Add(new PaginationButton(MetaData.CurrentPage - 1, MetaData.HasPrevious, "Previous"));
 
+        for (int i = 0; i < MetaData.TotalPages; i++)
+        {
+            if (i >= MetaData.CurrentPage - Spread && i <= MetaData.CurrentPage + Spread)
+            {
+                _paginationButtons.Add(new PaginationButton(i, true, i.ToString()) { Active = MetaData.CurrentPage == i });
+            }
+            
+        }
+
+
+        _paginationButtons.Add(new PaginationButton(MetaData.CurrentPage + 1, MetaData.HasNext, "Next"));
+
+
+
+
     }
 
 }
