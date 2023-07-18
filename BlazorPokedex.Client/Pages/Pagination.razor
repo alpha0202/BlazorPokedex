@@ -7,7 +7,7 @@
      <ul class="pagination justify-content-center">
         @foreach (var item in _paginationButtons)
         {
-            <li style="cursor:pointer" class="page-item @(item.Enable ? null : "disabled") @(item.Active? "active":null)">
+            <li @onclick="() => OnSelectedPage(item)" style="cursor:pointer" class="page-item @(item.Enable ? null : "disabled") @(item.Active? "active":null)">
                 <span class="page-link" href="#">@item.Text</span>
             </li>
 
@@ -30,6 +30,12 @@
     public int Spread { get; set; }
 
 
+    protected override void OnParametersSet()
+    {
+        CreatePaginationButtons();
+    }
+
+
     private void CreatePaginationButtons()
     {
         _paginationButtons = new List<PaginationButton>();
@@ -41,15 +47,22 @@
             {
                 _paginationButtons.Add(new PaginationButton(i, true, i.ToString()) { Active = MetaData.CurrentPage == i });
             }
-            
-        }
 
+        }
 
         _paginationButtons.Add(new PaginationButton(MetaData.CurrentPage + 1, MetaData.HasNext, "Next"));
 
+    }
 
 
+    private async Task OnSelectedPage(PaginationButton button)
+    {
+        if (button.Page == MetaData.CurrentPage || !button.Enable)
+            return;
 
+
+        MetaData.CurrentPage = button.Page;
+        await SelectedPage.InvokeAsync(button.Page);
     }
 
 }

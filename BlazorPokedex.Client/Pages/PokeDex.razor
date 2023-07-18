@@ -1,22 +1,49 @@
 ﻿@page "/"
 @using BlazorPokedex.Models;
+@using BlazorPokedex.Models.Pagination;
 @using BlazorPokedex.Services;
 @inject IPokeApiClient PokeApiClient; 
 
 
+<div>
 
+    <div class="row">
+        <div class="col">
+            <Pagination MetaData="paginationMetaData" Spread="5" SelectedPage="SelectedPage"/>
 
+        </div>
+
+    </div>
 <PokemonGrid Pokemons="Pokemons" NumberOfRows="10" />
+
+</div>
+
 
 
 
 @code {
     public IEnumerable<Pokemon> Pokemons { get; set; }
 
+    PaginationMetaData paginationMetaData = new PaginationMetaData();
+
+    PaginationParameters paginationParameters = new PaginationParameters();
+
 
     protected override async Task OnInitializedAsync()
     {
-        Pokemons = await PokeApiClient.GetAllPokemons();
+        Pokemons = await PokeApiClient.GetAllPokemons(paginationParameters);
+    }
+
+    private async Task SelectedPage(int page)
+    {
+        paginationParameters.PageNumber = page;
+        await GetPokemons();
+    }
+
+
+    private async Task GetPokemons()
+    {
+        Pokemons = await PokeApiClient.GetAllPokemons(paginationParameters);
     }
 
 }

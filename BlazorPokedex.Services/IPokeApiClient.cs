@@ -1,4 +1,5 @@
 ﻿using BlazorPokedex.Models;
+using BlazorPokedex.Models.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace BlazorPokedex.Services
 {
     public interface IPokeApiClient
     {
-        Task<IEnumerable<Pokemon>> GetAllPokemons();
+        Task<IEnumerable<Pokemon>> GetAllPokemons(PaginationParameters parameters);
         Task<Pokemon> GetPokemon(string name);
     }
 }

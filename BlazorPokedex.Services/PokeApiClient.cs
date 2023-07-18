@@ -1,4 +1,5 @@
 ﻿using BlazorPokedex.Models;
+using BlazorPokedex.Models.Pagination;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -20,9 +21,9 @@ namespace BlazorPokedex.Services
         }
 
 
-        public async Task<IEnumerable<Pokemon>> GetAllPokemons()
+        public async Task<IEnumerable<Pokemon>> GetAllPokemons(PaginationParameters parameters)
         {
-           var pokemonList = JsonConvert.DeserializeObject<ResultObject>(await _httpClient.GetStringAsync("pokemon?limit=24&offset=24"));
+           var pokemonList = JsonConvert.DeserializeObject<ResultObject>(await _httpClient.GetStringAsync($"pokemon?limit={parameters.PageSize}&offset={parameters.offSet}"));
 
             var resultList = new List<Pokemon>();
 
